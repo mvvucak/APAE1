@@ -2,15 +2,17 @@ package model;
 
 public abstract class Vehicle implements Runnable {
 	
-	protected int size,speed, startingPosition;
+	protected int size,speed, verticalLane, horizontalLane;
 	protected char symbol;
 	protected Intersection crossing;
+	protected Cell currentCell;
 	
-	public Vehicle(int size, int speed, int startingPosition, char symbol)
+	public Vehicle(int size, int speed, int verticalLane, int horizontalLane, char symbol)
 	{
 		this.size = size;
 		this.speed = speed;
-		this.startingPosition = startingPosition;
+		this.verticalLane = verticalLane;
+		this.horizontalLane = horizontalLane;
 		this.symbol = symbol;
 		this.crossing = Intersection.getInstance();
 	}
@@ -36,5 +38,15 @@ public abstract class Vehicle implements Runnable {
 	public int getSize()
 	{
 		return this.size;
+	}
+	
+	public void setCurrentCell(Cell currentCell)
+	{
+		this.currentCell = currentCell;
+	}
+	
+	public Cell getCurrentCell()
+	{
+		return this.currentCell;
 	}
 }

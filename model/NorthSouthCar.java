@@ -2,16 +2,22 @@ package model;
 
 public final class NorthSouthCar extends Vehicle {
 
-	public NorthSouthCar(int size, int speed, int startingPosition, char symbol)
+	public NorthSouthCar(int size, int speed, int verticalLane, int horizontalLane, char symbol)
 	{
-		super(size, speed, startingPosition, symbol);	
+		super(size, speed, verticalLane, horizontalLane, symbol);	
+		this.currentCell = null;
 	}
 	
-	@Override
+	/*
+	 * Moves the car across the intersection by successively entering the next cell.
+	 * North-South cars start in the first row and move down without changing their vertical lane.
+	 */
 	public void move() {
-		for(int pos = 0; pos < this.crossing.getRows(); pos++)
+		//For each cell in the North-South car's vertical lane, starting from the topmost.
+		for(int pos = horizontalLane; pos < this.crossing.getRows(); pos++)
 		{
-			crossing.getSpecificCell(pos, startingPosition).enter(this);
+			//Try to enter next cell in intersection.
+			crossing.getSpecificCell(pos, verticalLane).enter(this);
 			try
 			{
 				Thread.sleep(this.speed);
@@ -20,8 +26,9 @@ public final class NorthSouthCar extends Vehicle {
 			{
 				e.printStackTrace();
 			}
-			crossing.getSpecificCell(pos, startingPosition).exit();
 		}
+		//Exit last cell in intersection.
+		currentCell.exit();
 
 	}
 

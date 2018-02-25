@@ -52,7 +52,7 @@ public final class Intersection {
 		{
 			for(int c = 0; c < this.cols; c++)
 			{
-				printOut += this.cells[r][c].getPrintOut()+" ";
+				printOut += this.cells[r][c].getPrintOut();
 			}
 			printOut += "\n";
 		}

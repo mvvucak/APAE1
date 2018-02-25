@@ -2,17 +2,24 @@ package model;
 
 public class WestEastCar extends Vehicle {
 	
-	public WestEastCar(int size, int speed, int startingPosition, char symbol)
+	public WestEastCar(int size, int speed, int verticalLane, int horizontalLane, char symbol)
 	{
-		super(size, speed, startingPosition, symbol);	
+		super(size, speed, verticalLane, horizontalLane, symbol);		
+		this.currentCell = null;
 	}
 
 	@Override
+	/*
+	 * Moves the car across the intersection by successively entering the next cell.
+	 * West-East cars start in the first column and move right without changing their horizontal lane.
+	 */
 	public void move() 
 	{
-		for(int pos = 0; pos < this.crossing.getCols(); pos++)
+		//For each cell in the West-East car's horizontal lane, starting from the leftmosts.
+		for(int pos = verticalLane; pos < this.crossing.getCols(); pos++)
 		{
-			crossing.getSpecificCell(startingPosition, pos).enter(this);
+			//Try to enter next cell in intersection.
+			crossing.getSpecificCell(horizontalLane, pos).enter(this);
 			try
 			{
 				Thread.sleep(this.speed);
@@ -21,8 +28,9 @@ public class WestEastCar extends Vehicle {
 			{
 				e.printStackTrace();
 			}
-			crossing.getSpecificCell(startingPosition, pos).exit();
 		}
+		//Exit last cell in intersection]k,9.
+		currentCell.exit();
 
 	}
 

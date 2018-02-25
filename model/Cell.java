@@ -27,7 +27,9 @@ public class Cell {
 			{
 				occupied.await();
 			}
+			if(v.getCurrentCell() != null) v.getCurrentCell().exit();
 			this.occupant = v;
+			v.setCurrentCell(this);
 			this.isOccupied = true;
 		}
 		catch(InterruptedException e)
@@ -53,11 +55,11 @@ public class Cell {
 	{
 		if(this.occupant != null)
 		{
-			return "|"+this.occupant.getSymbol()+"|";
+			return "|"+this.occupant.getSymbol();
 		}
 		else
 		{
-			return "| |";
+			return "| ";
 		}
 	}
 	
