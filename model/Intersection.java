@@ -1,4 +1,4 @@
-package model;
+	package model;
 
 public final class Intersection {
 	
@@ -43,6 +43,23 @@ public final class Intersection {
 
 	public int getCols() {
 		return cols;
+	}
+	
+	public Cell[] getHorizontalLane(int lane)
+	{
+		return this.cells[lane];
+	}
+	
+	public Cell[] getVerticalLane(int lane)
+	{
+		Cell[] verticalLane = new Cell[this.getRows()];
+		
+		for(int i = 0; i < verticalLane.length; i++)
+		{
+			verticalLane[i] = cells[i][lane];
+		}
+		
+		return verticalLane;
 	}
 
 	public String getPrintOut()

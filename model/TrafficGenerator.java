@@ -2,10 +2,12 @@ package model;
 
 public abstract class TrafficGenerator implements Runnable {
 	
+	//Direction Constants
 	public static final int WEST_EAST = 0;
 	public static final int NORTH_SOUTH = 1;
 	public static final int EAST_WEST = 2;
 	public static final int SOUTH_NORTH = 3;
+	
 	protected int firstLane, lastLane;
 	protected VehicleFactory carMaker;
 	protected int direction;

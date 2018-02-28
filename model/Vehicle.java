@@ -2,23 +2,28 @@ package model;
 
 public abstract class Vehicle implements Runnable {
 	
-	protected int size,speed, verticalLane, horizontalLane;
+	protected int size, speed;
 	protected char symbol;
-	protected Intersection crossing;
+	protected Navigator nav;
 	protected Cell currentCell;
 	
-	public Vehicle(int size, int speed, int verticalLane, int horizontalLane, char symbol)
+	public Vehicle(int size, int speed, Navigator nav)
 	{
 		this.size = size;
 		this.speed = speed;
-		this.verticalLane = verticalLane;
-		this.horizontalLane = horizontalLane;
-		this.symbol = symbol;
-		this.crossing = Intersection.getInstance();
+		this.nav = nav;
+		this.symbol = nav.getMarker();
 	}
 	
 	//Moves vehicle to the next cell in the intersection.
-	public abstract void move();
+	public void move()
+	{
+		while(!nav.isOnLastCell())
+		{
+			nav.getNextCell().enter(this);
+		}
+		this.currentCell.exit();
+	}
 
 	public void leaveCell()
 	{
@@ -53,5 +58,15 @@ public abstract class Vehicle implements Runnable {
 	public Cell getCurrentCell()
 	{
 		return this.currentCell;
+	}
+	
+	public void setNavigator(Navigator nav)
+	{
+		this.nav = nav;
+	}
+	
+	public Navigator getNavigator()
+	{
+		return this.nav;
 	}
 }
