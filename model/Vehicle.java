@@ -19,6 +19,11 @@ public abstract class Vehicle implements Runnable {
 	
 	//Moves vehicle to the next cell in the intersection.
 	public abstract void move();
+
+	public void leaveCell()
+	{
+		this.currentCell.exit();
+	}
 	
 	public void run()
 	{

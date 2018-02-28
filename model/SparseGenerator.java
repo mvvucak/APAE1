@@ -2,32 +2,31 @@ package model;
 
 import java.util.Random;
 
-public class NorthSouthGenerator extends TrafficGenerator {
+public class SparseGenerator extends TrafficGenerator {
 	
 	private Random rand;
 	
-	public NorthSouthGenerator()
+	public SparseGenerator(int direction)
 	{
-		super();
-		this.carMaker = new NorthSouthCarFactory();
-		rand = new Random();
+		super(direction);
+		this.rand = new Random();
 	}
 	
-	public NorthSouthGenerator(int firstLane, int lastLane)
+	public SparseGenerator(int firstLane, int lastLane, int direction)
 	{
-		super(firstLane, lastLane);
+		super(firstLane, lastLane, direction);
 	}
 
 	@Override
 	public int generateSpeed() {
 		// TODO Auto-generated method stub
-		return 700;
+		return 500;
 	}
 
 	@Override
 	public int generateIntervalTime() {
 		// TODO Auto-generated method stub
-		return 500;
+		return 1500;
 	}
 
 	@Override

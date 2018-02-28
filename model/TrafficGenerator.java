@@ -2,17 +2,23 @@ package model;
 
 public abstract class TrafficGenerator implements Runnable {
 	
+	public static final int WEST_EAST = 0;
+	public static final int NORTH_SOUTH = 1;
+	public static final int EAST_WEST = 2;
+	public static final int SOUTH_NORTH = 3;
 	protected int firstLane, lastLane;
 	protected VehicleFactory carMaker;
+	protected int direction;
 	
-	public TrafficGenerator()
+	public TrafficGenerator(int direction)
 	{
-		this(-1, -1);
+		this(-1, -1, direction);
 	}
 	
-	public TrafficGenerator(int firstLane, int lastLane)
+	public TrafficGenerator(int firstLane, int lastLane, int direction)
 	{
-		if(firstLane<0 && lastLane<0)
+		this.direction = direction;
+		if(firstLane < 0 && lastLane < 0)
 		{
 			int[] lanes = getAllLanes();
 			firstLane = lanes[0];
@@ -20,6 +26,7 @@ public abstract class TrafficGenerator implements Runnable {
 		}
 		this.firstLane = firstLane;
 		this.lastLane = lastLane;
+		this.carMaker = createFactory();
 	}
 	
 	public void run()
@@ -27,7 +34,46 @@ public abstract class TrafficGenerator implements Runnable {
 		generateVehicles();
 	}
 	
-	public abstract int[] getAllLanes();
+	public int[] getAllLanes()
+	{
+		Intersection crossing = Intersection.getInstance();
+		int[] lanes = new int[2];
+		lanes[0] = 0;
+		if(direction == WEST_EAST || direction == EAST_WEST)
+		{
+			lanes[1] = crossing.getRows();
+		}
+		else
+		{
+			lanes[1] = crossing.getCols();
+		}
+		
+		return lanes;
+	}
+	
+	public VehicleFactory createFactory()
+	{
+		VehicleFactory carMaker = null;
+		
+		if(direction == WEST_EAST)
+		{
+			carMaker = new WestEastCarFactory();
+		}
+		else if(direction == EAST_WEST)
+		{
+			//Make East To West Factory
+		}
+		else if(direction == NORTH_SOUTH)
+		{
+			carMaker = new NorthSouthCarFactory();
+		}
+		else
+		{
+			//Make South To North Factory
+		}
+		
+		return carMaker;
+	}
 
 	public abstract int generateSpeed();
 

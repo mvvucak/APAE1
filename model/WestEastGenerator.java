@@ -18,14 +18,6 @@ public class WestEastGenerator extends TrafficGenerator {
 		super(firstLane, lastLane);
 	}
 
-	@Override
-	public int[] getAllLanes() {
-		Intersection crossing = Intersection.getInstance();
-		int[] lanes = new int[2];
-		lanes[0] = 0;
-		lanes[1] = crossing.getRows();
-		return lanes;
-	}
 
 	@Override
 	public int generateSpeed() {

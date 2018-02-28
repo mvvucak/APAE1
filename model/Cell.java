@@ -27,7 +27,7 @@ public class Cell {
 			{
 				occupied.await();
 			}
-			if(v.getCurrentCell() != null) v.getCurrentCell().exit();
+			if(v.getCurrentCell() != null) v.leaveCell();
 			this.occupant = v;
 			v.setCurrentCell(this);
 			this.isOccupied = true;
