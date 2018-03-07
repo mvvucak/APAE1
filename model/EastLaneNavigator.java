@@ -4,7 +4,7 @@ public class EastLaneNavigator extends SingleLaneNavigator {
 	
 	public EastLaneNavigator(int laneIndex)
 	{
-		this(laneIndex, 0, 'o');
+		this(laneIndex, 0, '>');
 	}
 	
 	public EastLaneNavigator(int laneIndex, int nextCellPosition, char marker)

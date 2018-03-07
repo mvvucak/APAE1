@@ -14,7 +14,7 @@ public class Statistics {
 		//For each generator used.
 		for(int i = 0; i<generators.length; i++)
 		{
-			//Calculate statistics and print them out.
+			//Calculate travel time statistics
 			long maxTime = getMaxTime(i);
 			long minTime = getMinTime(i);
 			
@@ -27,13 +27,14 @@ public class Statistics {
 			
 			
 			String name = generators[i].getName();
-			int firstLane = generators[i].getFirstLane()+1;
-			int lastLane = generators[i].getLastLane();
+			
+			//int firstLane = generators[i].getFirstLane()+1;
+			//int lastLane = generators[i].getLastLane();
 			
 			
 			System.out.println("Statistics for " + name);
-			System.out.print("First lane: "+ firstLane + ". ");
-			System.out.println("Last lane: " + lastLane + ".");
+			//System.out.print("First lane: "+ firstLane + ". ");
+			//System.out.println("Last lane: " + lastLane + ".");
 			System.out.println("Vehicles made: " + vehiclesMade);
 			System.out.println("Vehicles that completed crossing: " + vehiclesCrossed);
 			System.out.println("Maximum travel time: " + maxTime);

@@ -2,14 +2,10 @@ package model;
 
 public class FastGenerator extends TrafficGenerator {
 	
-	public FastGenerator(int direction)
-	{
-		super(direction);
-	}
 	
-	public FastGenerator(int firstLane, int lastLane, int direction)
+	public FastGenerator(CarFactory carMaker)
 	{
-		super(firstLane, lastLane, direction);
+		super(carMaker);
 	}
 
 	@Override

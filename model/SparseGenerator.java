@@ -1,19 +1,10 @@
 package model;
 
-
-
 public class SparseGenerator extends TrafficGenerator {
 	
-	
-	
-	public SparseGenerator(int direction)
+	public SparseGenerator(CarFactory carMaker)
 	{
-		super(direction);
-	}
-	
-	public SparseGenerator(int firstLane, int lastLane, int direction)
-	{
-		super(firstLane, lastLane, direction);
+		super(carMaker);
 	}
 
 	@Override

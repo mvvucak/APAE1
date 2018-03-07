@@ -4,15 +4,9 @@ package model;
 
 public class SlowGenerator extends TrafficGenerator {
 	
-
-	public SlowGenerator(int direction)
+	public SlowGenerator(CarFactory carMaker)
 	{
-		super(direction);
-	}
-	
-	public SlowGenerator(int firstLane, int lastLane, int direction)
-	{
-		super(firstLane, lastLane, direction);
+		super(carMaker);
 	}
 
 	@Override

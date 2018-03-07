@@ -5,15 +5,9 @@ public class UniformGenerator extends TrafficGenerator {
 	private int minSpeed, maxSpeed;
 	private int minInterval, maxInterval;
 	
-	public UniformGenerator(int direction)
+	public UniformGenerator(CarFactory carMaker)
 	{
-		super(direction);
-		instantiateDefaultRanges();
-	}
-	
-	public UniformGenerator(int firstLane, int lastLane, int direction)
-	{
-		super(firstLane, lastLane, direction);
+		super(carMaker);
 		instantiateDefaultRanges();
 	}
 	

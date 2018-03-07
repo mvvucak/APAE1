@@ -5,14 +5,9 @@ import java.util.ArrayList;
 
 public abstract class TrafficGenerator implements Runnable, VehicleObserver {
 	
-	//Direction Constants
-	public static final int WEST_EAST = 0;
-	public static final int NORTH_SOUTH = 1;
-	public static final int EAST_WEST = 2;
-	public static final int SOUTH_NORTH = 3;
 	protected static int generatorCounter = 1;
 	
-	protected int firstLane, lastLane, vehiclesMade, direction, id;
+	protected int vehiclesMade, id;
 	protected CarFactory carMaker;
 	protected Random rand;
 	protected ArrayList<Long> travelTimes;
@@ -21,11 +16,12 @@ public abstract class TrafficGenerator implements Runnable, VehicleObserver {
 	/**
 	 * Construct a traffic generator for all lanes in given direction.
 	 * @param direction: A TrafficGenerator constant defining the direction vehicles travel in.
-	 */
-	public TrafficGenerator(int direction)
+	
+	public TrafficGenerator()
 	{
-		this(-1, -1, direction);
+		this(null);
 	}
+	 */
 	
 	/**
 	 * Construct a traffic generator which will create and send cars down specified lanes
@@ -34,22 +30,12 @@ public abstract class TrafficGenerator implements Runnable, VehicleObserver {
 	 * @param lastLane: Index of last lane to generate vehicles for (exclusive)
 	 * @param direction: A TrafficGenerator constant defining the direction vehicles travel in.
 	 */
-	public TrafficGenerator(int firstLane, int lastLane, int direction)
+	public TrafficGenerator(CarFactory carMaker)
 	{
 		this.id = generatorCounter++;
-		this.direction = direction;
-		//If no lanes specified, get all lanes in specified direction.
-		if(firstLane < 0 && lastLane < 0)
-		{
-			int[] lanes = getAllLanes();
-			firstLane = lanes[0];
-			lastLane = lanes[1];
-		}
-		this.firstLane = firstLane;
-		this.lastLane = lastLane;
 		
 		this.travelTimes = new ArrayList<Long>();
-		this.carMaker = new CarFactory(this.direction);
+		this.carMaker = carMaker;
 		
 		this.rand = new Random();
 		this.isFinished = false;
@@ -58,28 +44,6 @@ public abstract class TrafficGenerator implements Runnable, VehicleObserver {
 	public void run()
 	{
 		generateVehicles();
-	}
-	
-	/**
-	 * Retrieves indices of all lanes heading in the constructor-specified direction.
-	 * First index is inclusive, second index is exclusive.
-	 * @return A 2-element array containing the lane indices.
-	 */
-	public int[] getAllLanes()
-	{
-		Intersection crossing = Intersection.getInstance();
-		int[] lanes = new int[2];
-		lanes[0] = 0;
-		if(direction == WEST_EAST || direction == EAST_WEST)
-		{
-			lanes[1] = crossing.getRows();
-		}
-		else
-		{
-			lanes[1] = crossing.getCols();
-		}
-		
-		return lanes;
 	}
 	
 	/**
@@ -94,16 +58,7 @@ public abstract class TrafficGenerator implements Runnable, VehicleObserver {
 	 */
 	public abstract int generateIntervalTime();
 	
-	/**
-	 * Randomly chooses a lane between firstLane(inclusive) and lastLane (exclusive).
-	 * @return the lane index.
-	 */
-	public int chooseLane()
-	{
-		int lane = rand.nextInt(lastLane-firstLane)+firstLane;
-		return lane;
-	}
-	
+
 	/**
 	 * Create vehicles and send them down the specified range of lanes.
 	 * Runs until told to stop (change in isFinished boolean).
@@ -113,9 +68,7 @@ public abstract class TrafficGenerator implements Runnable, VehicleObserver {
 		while(!isFinished)
 		{
 			int speed = generateSpeed();
-			int lane = chooseLane();
-			
-			Vehicle v = carMaker.createCar(speed, lane);
+			Vehicle v = carMaker.createCar(speed);
 			v.setObserver(this);
 			vehiclesMade++;
 			
@@ -155,26 +108,11 @@ public abstract class TrafficGenerator implements Runnable, VehicleObserver {
 	public String getName()
 	{
 		String name = "Generator " + this.id + ": ";
-		switch(this.direction)
-		{
-		case TrafficGenerator.EAST_WEST: name = name + "East to West"; break;
-		case TrafficGenerator.WEST_EAST: name = name + "West to East"; break;
-		case TrafficGenerator.NORTH_SOUTH: name = name + "North to South"; break;
-		case TrafficGenerator.SOUTH_NORTH: name = name + "South to North"; break;
-		}
 		return name;
 	}
 
 	public int getVehiclesMade() {
 		return vehiclesMade;
-	}
-	
-	public int getFirstLane() {
-		return firstLane;
-	}
-
-	public int getLastLane() {
-		return lastLane;
 	}
 	
 	/**

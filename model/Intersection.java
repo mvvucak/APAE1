@@ -37,6 +37,26 @@ public final class Intersection {
 		return theInstance;
 	}
 	
+	public int[] getRowIndices()
+	{
+		int[] rowIndices = new int[rows]; 
+		for(int i = 0; i < rowIndices.length; i++)
+		{
+			rowIndices[i]=i;
+		}
+		return rowIndices;
+	}
+	
+	public int[] getColIndices()
+	{
+		int[] colIndices = new int[cols];
+		for(int i = 0; i < colIndices.length; i++)
+		{
+			colIndices[i]=i;
+		}
+		return colIndices;
+	}
+	
 	public int getRows() {
 		return rows;
 	}

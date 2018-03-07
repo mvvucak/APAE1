@@ -1,9 +1,14 @@
 package model;
 
-public class NorthLaneNavigatorFactory implements NavigatorFactory {
+public class NorthLaneNavigatorFactory extends LaneNavigatorFactory {
+	
+	public NorthLaneNavigatorFactory(LaneChooser chooser)
+	{
+		super(chooser);
+	}
 
 	@Override
-	public Navigator createNavigator(int lane) {
+	public Navigator createLaneNavigator(int lane) {
 		
 		return (new NorthLaneNavigator(lane));
 	}

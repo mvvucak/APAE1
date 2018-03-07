@@ -4,15 +4,11 @@ public class GaussianGenerator extends TrafficGenerator {
 	
 	private int meanSpeed, speedStDev;
 	private int meanInterval, intervalStDev;
+
 	
-	public GaussianGenerator(int direction)
+	public GaussianGenerator(CarFactory carMaker)
 	{
-		super(direction);
-	}
-	
-	public GaussianGenerator(int firstLane, int lastLane, int direction)
-	{
-		super(firstLane, lastLane, direction);
+		super(carMaker);
 	}
 	
 	private void instantiateDefaultStats()
