@@ -4,7 +4,7 @@ public class WestLaneNavigator extends SingleLaneNavigator {
 	
 	public WestLaneNavigator(int laneIndex)
 	{
-		this(laneIndex, 0, 'c');
+		this(laneIndex, 0, '+');
 	}
 	
 	public WestLaneNavigator(int laneIndex, int nextCellPosition, char marker)
@@ -13,11 +13,13 @@ public class WestLaneNavigator extends SingleLaneNavigator {
 	}
 
 	@Override
-	public Cell[] findLane(int laneIndex) {
+	public Cell[] findLane(int laneIndex) 
+	{
 		Intersection crossing = Intersection.getInstance();
 		
 		//Retrieve the cells to be traversed in west-east order.
 		Cell[] lane = crossing.getHorizontalLane(laneIndex);
+		
 		
 		//Reverse the lane so that cells are in east-west order.
 		Cell temp;
@@ -27,9 +29,10 @@ public class WestLaneNavigator extends SingleLaneNavigator {
 		{
 			//Swap cells on opposite sides of the lane.
 			temp = lane[i];
-			lane[i] = lane[lane.length-i-1];
-			lane[lane.length-i-1] = temp;
+			lane[i] = lane[lane.length -i -1];
+			lane[lane.length -i -1] = temp;
 		}
+
 		return lane;
 	}
 

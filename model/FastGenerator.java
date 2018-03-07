@@ -1,28 +1,24 @@
 package model;
 
-
-
-public class SparseGenerator extends TrafficGenerator {
+public class FastGenerator extends TrafficGenerator {
 	
-	
-	
-	public SparseGenerator(int direction)
+	public FastGenerator(int direction)
 	{
 		super(direction);
 	}
 	
-	public SparseGenerator(int firstLane, int lastLane, int direction)
+	public FastGenerator(int firstLane, int lastLane, int direction)
 	{
 		super(firstLane, lastLane, direction);
 	}
 
 	@Override
 	/**
-	 * Generates a random speed for a vehicle between 300 and 500ms.
+	 * Generates a "fast" speed for a vehicle: between 50 and 100ms.
 	 * @return The speed in ms.
 	 */
 	public int generateSpeed() {
-		return rand.nextInt(200)+300;
+		return rand.nextInt(50)+50;
 	}
 
 	@Override
@@ -31,6 +27,7 @@ public class SparseGenerator extends TrafficGenerator {
 	 * @return: the interval time in ms.
 	 */
 	public int generateIntervalTime() {
-		return 1500;
+		return rand.nextInt(200)+300; 	
 	}
+
 }

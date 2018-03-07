@@ -1,15 +1,13 @@
 package model;
 
-import java.util.Random;
+
 
 public class SlowGenerator extends TrafficGenerator {
 	
-	private Random rand;
-	
+
 	public SlowGenerator(int direction)
 	{
 		super(direction);
-		this.rand = new Random();
 	}
 	
 	public SlowGenerator(int firstLane, int lastLane, int direction)
@@ -18,21 +16,18 @@ public class SlowGenerator extends TrafficGenerator {
 	}
 
 	@Override
+	/**
+	 * Generates a "slow" speed for a vehicle: between 1 and 3 seconds.
+	 * @return The speed in ms.
+	 */
 	public int generateSpeed() {
-		// TODO Auto-generated method stub
-		return 3000;
+		return rand.nextInt(1000)+2000;
 	}
 
 	@Override
 	public int generateIntervalTime() {
 		// TODO Auto-generated method stub
 		return 400;
-	}
-
-	@Override
-	public int chooseLane() {
-		int lane = rand.nextInt(lastLane);
-		return lane;
 	}
 
 }

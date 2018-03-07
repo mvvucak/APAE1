@@ -27,6 +27,7 @@ public class Cell {
 			{
 				occupied.await();
 			}
+			//If the vehicle is already in a cell, leave that cell.
 			if(v.getCurrentCell() != null) v.leaveCell();
 			this.occupant = v;
 			v.setCurrentCell(this);

@@ -47,7 +47,13 @@ public final class Intersection {
 	
 	public Cell[] getHorizontalLane(int lane)
 	{
-		return this.cells[lane];
+		Cell[] horizontalLane = new Cell[this.getCols()];
+		
+		for(int i = 0; i<horizontalLane.length; i++)
+		{
+			horizontalLane[i] = cells[lane][i];
+		}
+		return horizontalLane;
 	}
 	
 	public Cell[] getVerticalLane(int lane)

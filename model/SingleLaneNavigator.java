@@ -25,7 +25,7 @@ public abstract class SingleLaneNavigator extends Navigator {
 	
 	public boolean isOnLastCell()
 	{
-		if(this.nextCellPosition < this.lane.length)
+		if(this.nextCellPosition >= this.lane.length)
 		{
 			return true;
 		}

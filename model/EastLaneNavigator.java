@@ -19,6 +19,7 @@ public class EastLaneNavigator extends SingleLaneNavigator {
 		//Retrieve the cells to be traversed in west-east order.
 		Cell[] lane = crossing.getHorizontalLane(laneIndex);
 		
+		
 		return lane;
 	}
 
