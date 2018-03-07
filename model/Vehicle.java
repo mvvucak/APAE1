@@ -1,24 +1,64 @@
 package model;
 
-public abstract class Vehicle implements Runnable {
+public class Vehicle implements Runnable {
 	
-	protected int size,speed, verticalLane, horizontalLane;
-	protected char symbol;
-	protected Intersection crossing;
-	protected Cell currentCell;
+	private int size, speed;
+	private long startTime, endTime;
+	private char symbol;
+	private Navigator nav;
+	private Cell currentCell;
+	private VehicleObserver parentGenerator; 
+	private static boolean simulationFinished = false;
 	
-	public Vehicle(int size, int speed, int verticalLane, int horizontalLane, char symbol)
+	public Vehicle(int size, int speed, Navigator nav)
 	{
 		this.size = size;
 		this.speed = speed;
-		this.verticalLane = verticalLane;
-		this.horizontalLane = horizontalLane;
-		this.symbol = symbol;
-		this.crossing = Intersection.getInstance();
+		this.nav = nav;
+		this.symbol = nav.getMarker();
 	}
 	
-	//Moves vehicle to the next cell in the intersection.
-	public abstract void move();
+	//Moves vehicle to the next cell specified by the navigator.
+	public void move()
+	{
+		startTime = System.currentTimeMillis();
+		while(!nav.isOnLastCell() && !Vehicle.simulationFinished)
+		{
+			Cell next = nav.getNextCell();
+			next.enter(this);
+			//nav.getNextCell().enter(this);
+			try
+			{
+				Thread.sleep(this.speed);
+			}
+			catch(InterruptedException e){
+				
+			}
+		}
+		//If simulation is running, reached this block by traversing entire intersection.
+		if(!Vehicle.simulationFinished) terminate();
+		//Otherwise, reached this block because simulation ended. Did not traverse intersection.
+	}
+	
+	public void terminate()
+	{
+		this.leaveCell();
+		this.endTime = System.currentTimeMillis();
+		long travelTime = endTime - startTime;
+		notifyParentGenerator(travelTime);
+	}
+		
+
+	
+	public void notifyParentGenerator(long travelTime)
+	{
+		parentGenerator.update(travelTime);
+	}
+	
+	public static void stopMovement()
+	{
+		Vehicle.simulationFinished = true;
+	}
 
 	public void leaveCell()
 	{
@@ -33,6 +73,11 @@ public abstract class Vehicle implements Runnable {
 	public char getSymbol()
 	{
 		return this.symbol;
+	}
+	
+	public void setObserver(VehicleObserver obv)
+	{
+		this.parentGenerator = obv;
 	}
 	
 	public int getSpeed()
@@ -54,4 +99,22 @@ public abstract class Vehicle implements Runnable {
 	{
 		return this.currentCell;
 	}
+	
+	public void setNavigator(Navigator nav)
+	{
+		this.nav = nav;
+		this.symbol = nav.getMarker();
+	}
+	
+	public Navigator getNavigator()
+	{
+		return this.nav;
+	}
+	
+	public long getTravelTime()
+	{
+		return endTime - startTime;
+	}
+	
+	
 }
